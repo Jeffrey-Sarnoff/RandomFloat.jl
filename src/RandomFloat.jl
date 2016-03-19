@@ -1,0 +1,5 @@
+module RandomFloat
+
+
+
+end # module
