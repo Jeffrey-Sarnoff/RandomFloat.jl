@@ -1,23 +1,24 @@
 module RandomFloat
 
-import Base:ldexp
-
 export randfloat
 
-@vectorize_2arg Any ldexp
 
-function randfloat(r::FloatRange{Float64}=sqrt(eps(1.0)):(1.0/sqrt(eps(1.0))), dims...)
-   firstIsNeg = signbit(first(r))
-   lastIsNeg  = signbit(last(r))
-   if !firstIsNeg
-      lo = reinterpret(Int64,first(r))
-      hi = reinterpret(Int64,last(r))
-      [reinterpret(Float64,x) for x in rand(lo:hi, dims...)]
-   elseif lastIsNeg
-      -randfloat((-last(r)):(-first(r)), dims...)
-   else 
-      throw(ArgumentError("expecting range to be negative or positive, not mixed"))
-   end
+for (F,I) in ((:Float16, :Int16), (:Float32, :Int32), (:Float64, Int64))
+  @eval begin
+    function randfloat(r::FloatRange{$F}=sqrt(eps(one($F))):(one($F)/sqrt(eps(one($F)))), dims...)
+      firstIsNeg = signbit(first(r))
+      lastIsNeg  = signbit(last(r))
+      if !firstIsNeg
+        lo = reinterpret($I,first(r))
+        hi = reinterpret($I,last(r))
+        reinterpret($F, rand(lo:hi, dims...)
+      elseif lastIsNeg
+        -randfloat((-last(r)):(-first(r)), dims...)
+      else 
+        throw(ArgumentError("expecting range to be negative or positive, not mixed"))
+      end
+    end
+  end
 end
 
 end # module
