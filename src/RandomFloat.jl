@@ -16,7 +16,7 @@ function randfloat(r::FloatRange{Float64}=sqrt(eps(1.0)):(1.0/sqrt(eps(1.0))), d
    elseif lastIsNeg
       -randfloat((-last(r)):(-first(r)), dims...)
    else 
-      throw(ArgumentError("expecting range to be negative or positive, not mixed")
+      throw(ArgumentError("expecting range to be negative or positive, not mixed"))
    end
 end
 
