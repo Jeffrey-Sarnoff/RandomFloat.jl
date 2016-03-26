@@ -2,7 +2,7 @@ module RandomFloat
 
 export randfloat
 
-
+@
 for (F,I) in ((:Float16, :Int16), (:Float32, :Int32), (:Float64, Int64))
   @eval begin
     function randfloat(r::FloatRange{$F}=sqrt(eps(one($F))):(one($F)/sqrt(eps(one($F)))), dims...)
