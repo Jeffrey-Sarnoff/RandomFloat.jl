@@ -1,8 +1,12 @@
 module RandomFloat
 
+import Base: frexp, ldexp
+
 export randfloat
 
-@
+@vectorize_1arg Real frexp
+@vectorize_2arg Real ldexp
+
 for (F,I) in ((:Float16, :Int16), (:Float32, :Int32), (:Float64, Int64))
   @eval begin
     function randfloat(r::FloatRange{$F}=sqrt(eps(one($F))):(one($F)/sqrt(eps(one($F)))), dims...)
