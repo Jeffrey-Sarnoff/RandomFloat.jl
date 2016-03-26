@@ -5,7 +5,7 @@ import Base: frexp, ldexp
 export randfloat
 
 @vectorize_1arg Real frexp # frexp([x,y]) == ([frexp(x)[1], frexp(y)[1]], [frexp(x)[2], frexp(y)[2]]])
-@vectorize_2arg Real ldexp # ldexp(frexp([x,y])...) == [x,y]
+@vectorize_2arg Real ldexp # ldexp(frexp([x,y])...) == ldexp(frexp([x,y])[1], frexp([x,y])[2]) == [x,y]
 
 for (F,I) in ((:Float16, :Int16), (:Float32, :Int32), (:Float64, Int64))
   @eval begin
