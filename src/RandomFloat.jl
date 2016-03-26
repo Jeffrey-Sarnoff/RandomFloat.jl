@@ -11,7 +11,7 @@ for (F,I) in ((:Float16, :Int16), (:Float32, :Int32), (:Float64, Int64))
       if !firstIsNeg
         lo = reinterpret($I,first(r))
         hi = reinterpret($I,last(r))
-        reinterpret($F, rand(lo:hi, dims...)
+        reinterpret($F, rand(lo:hi, dims...))
       elseif lastIsNeg
         -randfloat((-last(r)):(-first(r)), dims...)
       else 
