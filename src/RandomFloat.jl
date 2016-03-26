@@ -14,7 +14,7 @@ function randfloat(r::FloatRange{Float64}=sqrt(eps(1.0)):(1.0/sqrt(eps(1.0))), d
       hi = reinterpret(Int64,last(r))
       [reinterpret(Float64,x) for x in rand(lo:hi, dims...)]
    elseif lastIsNeg
-      -randfloat(-r, dims...)
+      -randfloat((-last(r)):(-first(r)), dims...)
    else 
       negs = randfloat(first(r)::0.0, dims...)
       poss = randfloat(0.0:last(r), dims...)
